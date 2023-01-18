@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const URL = 'https://memo-server.onrender.com/posts';
+const URL = 'https://memo-server-app.onrender.com/posts';
+
+// Here you can change localhost to the generated link
+// As you can see, I used Render in this case for server deployment
 
 export const fetchPosts = () => axios.get(URL);
 export const createPost = (newPost) => axios.post(URL, newPost);
