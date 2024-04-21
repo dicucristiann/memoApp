@@ -1,12 +1,20 @@
 import axios from 'axios';
+const API = axios.create({ baseURL: 'http://localhost:5000' });
+// const API = axios.create({ baseURL: 'https://server-memo-application.onrender.com' });
 
-const URL = 'https://server-memo-application.onrender.com/posts';
-
-// Here you can change localhost to the generated link
-// As you can see, I used Render in this case for server deployment
-
-export const fetchPosts = () => axios.get(URL);
-export const createPost = (newPost) => axios.post(URL, newPost);
-export const likePost = (id) => axios.patch(`${URL}/${id}/likePost`);
-export const updatePost = (id, updatedPost) => axios.patch(`${URL}/${id}`, updatedPost);
-export const deletePost = (id) => axios.delete(`${URL}/${id}`);
+API.interceptors.request.use((req) => {
+    if (localStorage.getItem('profile')) {
+      req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+    }
+  
+    return req;
+  });
+  
+  export const fetchPosts = () => API.get('/posts');
+  export const createPost = (newPost) => API.post('/posts', newPost);
+  export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
+  export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
+  export const deletePost = (id) => API.delete(`/posts/${id}`);
+  
+  export const signIn = (formData) => API.post('/user/signin', formData);
+  export const signUp = (formData) => API.post('/user/signup', formData);
