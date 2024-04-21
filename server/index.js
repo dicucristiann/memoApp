@@ -16,6 +16,10 @@ app.use(cors());
 
 app.use('/posts', postRoutes);
 
+app.get('/', (req, res) => {
+  res.send('Hello. Server is on!');
+})
+
 //! Sensitive information moved to the .env file:  PORT and CONNECTION_URL
 //mongodb+srv://<user>:<password></password>>@cluster0.nnng7al.mongodb.net/?retryWrites=true&w=majority
 const PORT = process.env.PORT || 5000;
